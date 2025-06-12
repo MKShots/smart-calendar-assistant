@@ -191,9 +191,6 @@ After basic setup, consider these enhancements:
 - [ ] Add recurring event support
 - [ ] Implement backup to cloud storage
 
-## 📝 License
-
-This project is open source and available under the [MIT License](LICENSE).
 
 ## 🤝 Contributing
 
