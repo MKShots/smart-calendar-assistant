@@ -1,0 +1,28 @@
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+python-multipart==0.0.6
+
+# LLM and AI libraries (using more recent compatible versions)
+langchain==0.1.0
+langchain-community==0.0.12
+huggingface-hub==0.20.0
+
+# Google Calendar API
+google-api-python-client==2.109.0
+google-auth-httplib2==0.1.1
+google-auth-oauthlib==1.1.0
+
+# Database (sqlite3 is built into Python)
+
+# Timezone and datetime handling
+pytz==2023.3
+
+# HTTP requests
+requests==2.31.0
+
+# Environment and configuration
+python-dotenv==1.0.0
+
+# Logging and utilities
+python-json-logger==2.0.7 
