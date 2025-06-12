@@ -5,7 +5,7 @@ from typing import Optional, List
 import logging
 from datetime import datetime, timedelta
 
-from .llm_simple import parse_event_with_llm
+from .llm_hybrid import parse_event_with_llm, get_parser_status
 from .api_simple import add_event_to_calendar, sync_calendar_events
 from .db import init_db, store_event, get_events, check_conflicts
 from .utils import detect_timezone
@@ -182,10 +182,14 @@ async def health_check():
         # TODO: Add Google Calendar API connectivity check
         calendar_status = "not_checked"
         
+        # Check parser status
+        parser_info = get_parser_status()
+        
         return {
             "status": "healthy",
             "database": db_status,
             "calendar_api": calendar_status,
+            "parser": parser_info,
             "timestamp": datetime.now().isoformat()
         }
         
@@ -194,6 +198,33 @@ async def health_check():
             status_code=503,
             content={
                 "status": "unhealthy",
+                "error": str(e),
+                "timestamp": datetime.now().isoformat()
+            }
+        )
+
+@app.get("/parser-status")
+async def get_parsing_status():
+    """Get detailed information about available parsing methods."""
+    try:
+        status = get_parser_status()
+        
+        return {
+            "success": True,
+            "parsing_capabilities": status,
+            "instructions": {
+                "advanced_parsing": "Set HUGGINGFACE_API_TOKEN environment variable",
+                "fallback_parsing": "Always available (rule-based)",
+                "hybrid_mode": "Automatically tries best available method"
+            },
+            "timestamp": datetime.now().isoformat()
+        }
+        
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={
+                "success": False,
                 "error": str(e),
                 "timestamp": datetime.now().isoformat()
             }

@@ -4,13 +4,16 @@ A free, always-accessible calendar organizer that uses natural language processi
 
 ## 🚀 Features
 
-- **Natural Language Input**: Add events using plain English like "Schedule dentist appointment tomorrow at 2 PM"
-- **Conflict Detection**: Automatically checks for scheduling conflicts with configurable gap times
-- **Google Calendar Integration**: Seamlessly syncs with your Google Calendar
-- **Local Database**: Maintains an encrypted SQLite database for offline access
-- **Daily Sync**: Automatically syncs with Google Calendar daily
-- **REST API**: Access from any device via HTTP endpoints
-- **Free Tier**: Runs entirely on free services (Hugging Face, Render, Google Calendar)
+- **🧠 Hybrid AI Parsing**: Advanced LLM parsing with simple rule-based fallback
+- **🚀 Zero-Config Start**: Works immediately without API keys (fallback mode)
+- **⚡ Smart Upgrade**: Automatically uses LangChain + Hugging Face when available
+- **🔍 Natural Language Input**: Add events using plain English like "Schedule dentist appointment tomorrow at 2 PM"
+- **⚠️ Conflict Detection**: Automatically checks for scheduling conflicts with configurable gap times
+- **📅 Google Calendar Integration**: Seamlessly syncs with your Google Calendar
+- **💾 Local Database**: Maintains an encrypted SQLite database for offline access
+- **🔄 Daily Sync**: Automatically syncs with Google Calendar daily
+- **🌐 REST API**: Access from any device via HTTP endpoints
+- **💰 Free Tier**: Runs entirely on free services (Hugging Face, Render, Google Calendar)
 
 ## 🧱 Tech Stack
 
@@ -106,6 +109,28 @@ uvicorn app.main:app --reload --port 8000
 4. Upload your `credentials.json` file to the Render dashboard
 5. Deploy the service
 
+## 🧠 Hybrid AI Parsing
+
+This project uses an **intelligent hybrid approach** for parsing natural language:
+
+### 🎯 **How It Works**
+1. **🚀 Advanced Mode**: Tries LangChain + Hugging Face LLM first (if API token available)
+2. **🛡️ Fallback Mode**: Uses rule-based parsing if LLM unavailable 
+3. **✅ Always Works**: Guaranteed to work even without any API setup
+
+### 📊 **Check Your Parser Status**
+```bash
+curl "http://localhost:8000/parser-status"
+```
+
+### ⚡ **Upgrade to Advanced Parsing**
+```bash
+# Set your Hugging Face token
+export HUGGINGFACE_API_TOKEN="your_token_here"
+
+# Restart the app - LangChain will automatically activate!
+```
+
 ## 📖 API Usage
 
 ### Add Event
@@ -131,10 +156,11 @@ curl "http://localhost:8000/events?start_date=2024-01-01T00:00:00&end_date=2024-
 curl -X POST "http://localhost:8000/sync-calendar"
 ```
 
-### Health Check
+### Check System Health & Parser Status
 
 ```bash
 curl "http://localhost:8000/health"
+curl "http://localhost:8000/parser-status"
 ```
 
 ## 🔄 Daily Sync Setup
